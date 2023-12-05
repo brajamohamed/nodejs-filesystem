@@ -12,6 +12,7 @@ app.post("/createfile", (req, res) => {
   const filename = `${date}-${time}.txt`;
   const filepath = path.join(__dirname, "/files", filename);
   const fileContent = currentdate.toString();
+
   fs.writeFile(filepath, fileContent, (error) => {
     if (error) {
       console.log("Error while creating File");
@@ -20,6 +21,19 @@ app.post("/createfile", (req, res) => {
         .send({ message: "Internal server Error", filepath });
     }
     return res.status(200).send({ message: "File created successfully" });
+  });
+});
+
+app.get("/readfiles", (req, res) => {
+  const filepath = path.join(__dirname, "/files");
+
+  fs.readdir(filepath, (error, files) => {
+    if (error) {
+      console.log("Error while getting files");
+      res.status(500).send({ message: "Error reading files" });
+    }
+
+    res.status(200).json({ files });
   });
 });
 
