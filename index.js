@@ -9,7 +9,7 @@ app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
-app.post("https://task1-vn2y.onrender.com/createfile", (req, res) => {
+app.post("/createfile", (req, res) => {
   const currentdate = new Date();
   const date = currentdate.toISOString().replace(/:/g, "-").split("T")[0];
   const time = currentdate.toISOString().replace(/:/g, "-").split("T")[1];
@@ -31,7 +31,7 @@ app.post("https://task1-vn2y.onrender.com/createfile", (req, res) => {
   }
 });
 
-app.get("https://task1-vn2y.onrender.com/readfiles", (req, res) => {
+app.get("/readfiles", (req, res) => {
   const filepath = path.join(__dirname, "/files");
 
   fs.readdir(filepath, (error, files) => {
