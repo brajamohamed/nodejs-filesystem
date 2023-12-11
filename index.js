@@ -5,6 +5,10 @@ app.use(express.json());
 const fs = require("fs");
 const path = require("path");
 
+app.get("/", (req, res) => {
+  res.send("Hello world");
+});
+
 app.post("/createfile", (req, res) => {
   const currentdate = new Date();
   const date = currentdate.toISOString().replace(/:/g, "-").split("T")[0];
