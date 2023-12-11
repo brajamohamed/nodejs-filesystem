@@ -16,16 +16,19 @@ app.post("/createfile", (req, res) => {
   const filename = `${date}-${time}.txt`;
   const filepath = path.join(__dirname, "/files", filename);
   const fileContent = currentdate.toString();
-
-  fs.writeFile(filepath, fileContent, (error) => {
-    if (error) {
-      console.log("Error while creating File");
-      return res
-        .status(500)
-        .send({ message: "Internal server Error", filepath });
-    }
-    return res.status(200).send({ message: "File created successfully" });
-  });
+  try {
+    fs.writeFile(filepath, fileContent, (error) => {
+      if (error) {
+        console.log("Error while creating File");
+        return res
+          .status(500)
+          .send({ message: "Internal server Error", filepath });
+      }
+      return res.status(200).send({ message: "File created successfully" });
+    });
+  } catch {
+    res.status(500).send("Internal server Error");
+  }
 });
 
 app.get("/readfiles", (req, res) => {
